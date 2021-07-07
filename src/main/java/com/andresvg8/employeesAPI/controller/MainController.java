@@ -261,23 +261,22 @@ public class MainController {
 	 * Returns an Employee list, filtered by positionName, or employeeName, or both. If do not specify positionName or employeeName, returns all registered employees. 
 	 * @return
 	 */
-	@GetMapping("/employees/position-name/{positionName}/employee-name/{personName}")
-	public ResponseEntity<?> listEmployees(@PathVariable(required = false) String positionName, @PathVariable(required = false) String personName){
+	@GetMapping({"/employees/position-name/{positionName}/employee-name/{personName}", 
+			"/employees/position-name/{positionName}/employee-name/", 
+			"/employees/position-name//employee-name/{personName}", 
+			"/employees/position-name//employee-name/"})
+	public ResponseEntity<?> listEmployees(@PathVariable Optional<String> positionName, @PathVariable Optional<String> personName){
 		/*Este Endpoint debe permitir filtrar por cargo o nombre
 		Estos parámetros son opcionales, si no se envía alguno de estos, debe traer todos los empleados.*/
 		List<Employee> employees;
-		if(!positionName.equals("") && !personName.equals(""))
+		if((positionName.isPresent()) && (personName.isPresent()))
 		{
-			System.out.println("FILTRO A");
-			employees = StreamSupport.stream(employeeService.findByPositionNameOrPersonName(positionName, personName).spliterator(), false).collect(Collectors.toList());
-		} else if(!positionName.equals("")){
-			System.out.println("FILTRO B");
-			employees = StreamSupport.stream(employeeService.findByPositionName(positionName).spliterator(), false).collect(Collectors.toList());
-		} else if(!personName.equals("")) {
-			System.out.println("FILTRO C");
-			employees = StreamSupport.stream(employeeService.findByPersonName(personName).spliterator(), false).collect(Collectors.toList());
+			employees = StreamSupport.stream(employeeService.findByPositionNameOrPersonName(positionName.get(), personName.get()).spliterator(), false).collect(Collectors.toList());
+		} else if(positionName.isPresent()){
+			employees = StreamSupport.stream(employeeService.findByPositionName(positionName.get()).spliterator(), false).collect(Collectors.toList());
+		} else if(personName.isPresent()) {
+			employees = StreamSupport.stream(employeeService.findByPersonName(personName.get()).spliterator(), false).collect(Collectors.toList());
 		} else {
-			System.out.println("FILTRO D");
 			employees = StreamSupport.stream(employeeService.findAll().spliterator(), false).collect(Collectors.toList());
 		}
 		return ResponseEntity.ok(employees);

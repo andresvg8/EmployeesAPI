@@ -77,4 +77,9 @@ public class EmployeeService {
 	public List<Employee> findByPositionId(Long positionId){
 		return repo.findByPositionId(positionId);
 	}
+	
+	@Transactional
+	public List<Employee> buscarPorNombrePersona(String personName){
+		return repo.buscarPorNombrePersona(personName);
+	}
 }

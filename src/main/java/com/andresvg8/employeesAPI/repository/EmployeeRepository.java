@@ -25,13 +25,16 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 	@Query(name="Employee.deleteByPersonId")
 	void deleteByPersonId(Long personId);
 	
-	@Query(name = "Employee.findByPositionNameOrPersonName")
+	//@Query(name = "Employee.findByPositionNameOrPersonName")
+	@Query("SELECT e FROM Employee e WHERE e.position.name LIKE %:positionName% AND (e.person.name LIKE %:personName% OR e.person.lastName LIKE %:personName%)")
 	List<Employee> findByPositionNameOrPersonName(String positionName, String personName);
 
-	@Query(name = "Employee.findByPositionName")
+	//@Query(name = "Employee.findByPositionName")
+	@Query("SELECT e FROM Employee e WHERE e.position.name LIKE %:positionName%")
 	List<Employee> findByPositionName(String positionName);
 
-	@Query(name = "Employee.findByPersonName")
+	//@Query(name = "Employee.findByPersonName")
+	@Query("SELECT e FROM Employee e WHERE e.person.name LIKE %:personName% OR e.person.lastName LIKE %:personName%")
 	List<Employee> findByPersonName(String personName);
 
 	@Query(name = "Employee.findAllWithPositionAndSalary")
@@ -39,4 +42,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 	
 	@Query(name = "Employee.findByPositionId")
 	List<Employee> findByPositionId(Long positionId);
+	
+	@Query("SELECT e FROM Employee e WHERE e.person.name LIKE %:personName%")
+	List<Employee> buscarPorNombrePersona(String personName);
 }

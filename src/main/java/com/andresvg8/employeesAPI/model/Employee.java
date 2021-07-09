@@ -23,12 +23,12 @@ import javax.persistence.OneToOne;
 ({
     @NamedQuery(name = "Employee.findByPositionIdOrPersonId", 
 		query = "SELECT e FROM Employee e WHERE e.position.id = :positionId OR e.person.id = :personId"),
-    @NamedQuery(name = "Employee.findByPositionNameOrPersonName", 
-		query = "SELECT e FROM Employee e WHERE e.position.name LIKE :positionName AND (e.person.name LIKE :personName OR e.person.lastName LIKE :personName)"),
-    @NamedQuery(name = "Employee.findByPositionName", 
-		query = "SELECT e FROM Employee e WHERE e.position.name LIKE :positionName"),
-    @NamedQuery(name = "Employee.findByPersonName", 
-		query = "SELECT e FROM Employee e WHERE e.person.name LIKE :personName OR e.person.lastName LIKE :personName"),
+    /*@NamedQuery(name = "Employee.findByPositionNameOrPersonName", 
+		query = "SELECT e FROM Employee e WHERE e.position.name LIKE :positionName AND (e.person.name LIKE :personName OR e.person.lastName LIKE :personName)"),*/
+    /*@NamedQuery(name = "Employee.findByPositionName", 
+		query = "SELECT e FROM Employee e WHERE e.position.name LIKE :positionName"),*/
+    /*@NamedQuery(name = "Employee.findByPersonName", 
+		query = "SELECT e FROM Employee e WHERE e.person.name LIKE :personName OR e.person.lastName LIKE :personName"),*/
     @NamedQuery(name = "Employee.findAllWithPositionAndSalary", 
 		query = "SELECT e FROM Employee e ORDER BY e.position.name, e.salary DESC"),
 	@NamedQuery(name = "Employee.deleteByPersonId", 

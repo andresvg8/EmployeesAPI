@@ -301,4 +301,10 @@ public class MainController {
 		}
 		return ResponseEntity.ok(positionResponses);
 	}
+	
+	@GetMapping("/buscarPorNombrePersona/{personName}")
+	public ResponseEntity<?> buscarPorNombrePersona(@PathVariable String personName){
+		List<Employee> employees = StreamSupport.stream(employeeService.buscarPorNombrePersona(personName).spliterator(), false).collect(Collectors.toList());
+		return ResponseEntity.ok(employees);
+	}
 }
